@@ -20,7 +20,6 @@ public class ExchangeController {
                                @PathVariable String to ){
 
     String port = environment.getProperty("local.server.port");
-
     return new Exchange(1L, from, to, BigDecimal.ONE, BigDecimal.ONE, port);
   }
 }

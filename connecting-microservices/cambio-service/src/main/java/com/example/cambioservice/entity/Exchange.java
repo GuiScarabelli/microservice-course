@@ -10,13 +10,9 @@ import java.math.BigDecimal;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-// @Entity
-public class Exchange {
-  /*@Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-   */
-  private Long id;
 
+public class Exchange {
+  private Long id;
 
   private String from;
 
