@@ -1,10 +1,13 @@
 package com.example.cambioservice.controller;
 
 import com.example.cambioservice.entity.Exchange;
+import com.example.cambioservice.mapper.ExchangeListing;
+import com.example.cambioservice.mapper.ExchangeMapper;
+import com.example.cambioservice.repository.ExchangeRepository;
+import com.example.cambioservice.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.math.BigDecimal;
 
 @RestController
@@ -12,14 +15,12 @@ import java.math.BigDecimal;
 public class ExchangeController {
 
   @Autowired
-  private Environment environment;// Serve para recuperar a porta da instancia do cambio-service
-
+  private ExchangeService service;
   @GetMapping("/{amount}/{from}/{to}")
-  private Exchange getExchange(@PathVariable BigDecimal amount,
-                               @PathVariable String from,
-                               @PathVariable String to ){
+  private ResponseEntity<ExchangeListing> getExchange(@PathVariable BigDecimal amount,
+                                                      @PathVariable String from,
+                                                      @PathVariable String to ){
 
-    String port = environment.getProperty("local.server.port");
-    return new Exchange(1L, from, to, BigDecimal.ONE, BigDecimal.ONE, port);
+    return ResponseEntity.status(200).body(ExchangeMapper.toDto(service.getExchange(to, from, amount)));
   }
 }
