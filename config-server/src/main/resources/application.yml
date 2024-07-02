@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/GuiScarabelli/config-server-microservice-course
+          # username: username Caso o repositório esteja privado, passa o username
+          # password: password Caso o repositório esteja privado, passa o password
+          # default-label: main Caso queira especificar a branch do repositorio
+          search-paths:
+            - 'greeting-service*'
+server:
+  port: 8888
