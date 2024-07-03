@@ -26,7 +26,9 @@ public class Exchange {
 
   private BigDecimal conversionFactor;
 
+  @Transient
   private BigDecimal conversionValue;
 
+  @Transient
   private String enviroment;
 }

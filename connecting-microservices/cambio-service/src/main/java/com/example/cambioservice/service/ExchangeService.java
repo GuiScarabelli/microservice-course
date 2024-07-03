@@ -17,6 +17,7 @@ public class ExchangeService {
 
   @Autowired
   private ExchangeRepository repository;
+
   public Exchange getExchange(String to, String from, BigDecimal amount){
 
       var cambio = repository.findByFromAndTo(from, to);

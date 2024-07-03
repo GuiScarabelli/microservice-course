@@ -12,6 +12,9 @@ public class ExchangeMapper {
     }
 
     ExchangeListing dto = new ExchangeListing();
+    dto.setTo(entity.getTo());
+    dto.setFrom(entity.getFrom());
+    dto.setConversionFactor(entity.getConversionFactor());
     dto.setConvertedValue(entity.getConversionValue());
     return dto;
   }
