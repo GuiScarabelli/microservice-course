@@ -3,6 +3,7 @@ package com.example.bookservice.controller;
 import com.example.bookservice.entity.Book;
 import com.example.bookservice.mapper.BookListing;
 import com.example.bookservice.mapper.BookMapper;
+import com.example.bookservice.proxy.ExchangeProxy;
 import com.example.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ public class BookController {
 
   @Autowired
   private BookService service;
-
   @GetMapping("/{id}/{currency}")
   public ResponseEntity<BookListing> getBook(@PathVariable int id, @PathVariable String currency){
     Book book = service.getBookById(id, currency);
