@@ -4,14 +4,9 @@ import com.example.bookservice.entity.Book;
 import com.example.bookservice.exception.BookDontExist;
 import com.example.bookservice.proxy.ExchangeProxy;
 import com.example.bookservice.repository.BookRepository;
-import com.example.bookservice.response.Exchange;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 

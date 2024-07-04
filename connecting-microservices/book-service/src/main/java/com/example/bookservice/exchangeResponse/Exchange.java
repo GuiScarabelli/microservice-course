@@ -1,7 +1,6 @@
-package com.example.bookservice.response;
+package com.example.bookservice.exchangeResponse;
 
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
 package com.example.bookservice.proxy;
 
-import com.example.bookservice.response.Exchange;
-import com.example.bookservice.response.mapper.ExchangeListing;
+import com.example.bookservice.exchangeResponse.mapper.ExchangeListing;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

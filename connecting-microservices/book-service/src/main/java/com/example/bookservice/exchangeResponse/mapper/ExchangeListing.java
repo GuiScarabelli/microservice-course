@@ -1,4 +1,4 @@
-package com.example.bookservice.response.mapper;
+package com.example.bookservice.exchangeResponse.mapper;
 
 import lombok.Getter;
 import lombok.Setter;
