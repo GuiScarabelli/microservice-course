@@ -26,7 +26,7 @@ public class BookService {
       );
     }
 
-    HashMap<String, String> params = new HashMap<>();
+  HashMap<String, String> params = new HashMap<>();
     params.put("amount", bookOpt.get().getPrice().toString());
     params.put("from", "USD");
     params.put("to", currency);
@@ -38,9 +38,6 @@ public class BookService {
                     Exchange.class,
                     params);
     var exchange = response.getBody();
-
-    System.out.println(response);
-    System.out.println(exchange.getConversionValue());
 
     bookOpt.get().setPrice(exchange.getConversionValue());
     return bookOpt.get();

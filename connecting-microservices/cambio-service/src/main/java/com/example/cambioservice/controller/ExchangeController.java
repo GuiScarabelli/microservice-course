@@ -17,10 +17,13 @@ public class ExchangeController {
   @Autowired
   private ExchangeService service;
   @GetMapping("/{amount}/{from}/{to}")
-  private ResponseEntity<ExchangeListing> getExchange(@PathVariable BigDecimal amount,
+  private ResponseEntity<ExchangeListing> getExchange(@PathVariable Double amount,
                                                       @PathVariable String from,
                                                       @PathVariable String to ){
 
-    return ResponseEntity.status(200).body(ExchangeMapper.toDto(service.getExchange(to, from, amount)));
+    Exchange exchange = service.getExchange(to, from, amount);
+    ExchangeListing dto = ExchangeMapper.toDto(exchange);
+
+    return ResponseEntity.status(200).body(dto);
   }
 }

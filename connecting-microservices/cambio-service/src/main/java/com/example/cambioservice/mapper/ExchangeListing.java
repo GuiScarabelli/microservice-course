@@ -13,7 +13,7 @@ public class ExchangeListing {
 
   private String to;
 
-  private BigDecimal conversionFactor;
+  private Double conversionFactor;
 
-  private BigDecimal convertedValue;
+  private Double conversionValue;
 }

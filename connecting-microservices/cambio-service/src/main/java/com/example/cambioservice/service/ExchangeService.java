@@ -5,10 +5,6 @@ import com.example.cambioservice.repository.ExchangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Service
 public class ExchangeService {
@@ -17,18 +13,14 @@ public class ExchangeService {
 
   @Autowired
   private ExchangeRepository repository;
+  public Exchange getExchange(String to, String from, Double amount){
 
-  public Exchange getExchange(String to, String from, BigDecimal amount){
+    var cambio = repository.findByFromAndTo(from, to);
 
-      var cambio = repository.findByFromAndTo(from, to);
-      String port = environment.getProperty("local.server.port");
+    Double conversionFactor = cambio.getConversionFactor();
+    Double convertedValue = Math.ceil(conversionFactor * amount * 100.0) / 100.0;
 
-      BigDecimal conversionFactor = cambio.getConversionFactor();
-      BigDecimal convertedValue = conversionFactor.multiply(amount);
-
-      cambio.setConversionValue(convertedValue.setScale(2, RoundingMode.CEILING));
-      cambio.setEnviroment(port);
-
-      return cambio;
+    cambio.setConversionValue(convertedValue);
+    return cambio;
   }
 }

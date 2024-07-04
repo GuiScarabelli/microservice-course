@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.math.BigDecimal;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -24,11 +23,11 @@ public class Exchange {
   @Column(name = "to_currency")
   private String to;
 
-  private BigDecimal conversionFactor;
+  private Double conversionFactor;
 
   @Transient
-  private BigDecimal conversionValue;
+  private Double conversionValue;
 
   @Transient
-  private String enviroment;
+  private String environment;
 }
