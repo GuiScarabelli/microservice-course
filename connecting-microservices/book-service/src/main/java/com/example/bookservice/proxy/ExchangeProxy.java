@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // Aqui ele vai buscar o serviço utilizando o Feign
-@FeignClient(name = "cambio-service", url = "localhost:8000")
+@FeignClient(name = "cambio-service")
 public interface ExchangeProxy {
 
   @GetMapping("exchanges/{amount}/{from}/{to}")
