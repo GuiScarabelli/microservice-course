@@ -5,6 +5,7 @@ import com.example.bookservice.exception.BookDontExist;
 import com.example.bookservice.proxy.ExchangeProxy;
 import com.example.bookservice.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -19,6 +20,9 @@ public class BookService {
   @Autowired
   private ExchangeProxy proxy;
 
+  @Autowired
+  private Environment port;
+
   public Book getBookById(Integer id, String currency){
     Optional<Book> bookOpt = repository.findById(id);
     if (bookOpt.isEmpty()){
@@ -27,6 +31,8 @@ public class BookService {
 
     var exchange = proxy.getExchange(bookOpt.get().getPrice(), "USD", currency);
     bookOpt.get().setPrice(Objects.requireNonNull(exchange.getBody()).getConversionValue());
+
+    bookOpt.get().setEnviroment("book port: "+ port.getProperty("local.server.port"));
 
     return bookOpt.get();
   }
