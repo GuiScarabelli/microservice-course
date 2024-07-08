@@ -16,14 +16,18 @@ public class GatewayConfiguration {
   public RouteLocator gatewayRouter(RouteLocatorBuilder builder){
 
     // Get the path and redirect to another URL
-    Function<PredicateSpec, Buildable<Route>> function =
-          p -> p.path("/get")
-                  .filters(f -> f
-                          .addRequestHeader("hello", "world")
-                          .addRequestParameter("hello", "world"))
-                  .uri("http://httpbin.org:80"); // Default Spring URI, this convert a HTTP call to a JSON
     return builder.routes()
-            .route(function)
+            .route(p -> p.path("/get")
+                    .filters(f -> f
+                            .addRequestHeader("hello", "world")
+                            .addRequestParameter("hello", "world"))
+                    .uri("http://httpbin.org:80"))// Default Spring URI, this convert a HTTP call to a JSON
+
+            .route(p -> p.path("/exchanges/**")
+                    .uri("lb://cambio-service"))
+
+            .route(p -> p.path("/books/**")
+                    .uri("lb://book-service"))
             .build();
   }
 }
