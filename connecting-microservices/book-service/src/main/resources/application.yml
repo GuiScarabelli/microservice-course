@@ -26,3 +26,10 @@ management:
         include: '*'
 server:
   port: 8100
+resilience4j:
+  retry:
+    instances:
+      default:
+        max-attempts: 5
+        wait-duration: 1s
+        enable-exponential-backoff: true

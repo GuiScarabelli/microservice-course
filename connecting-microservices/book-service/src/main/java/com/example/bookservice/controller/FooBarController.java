@@ -9,19 +9,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/foo-bar")
+@RequestMapping
 public class FooBarController {
 
   private Logger logger = LoggerFactory.getLogger(FooBarController.class);
 
-  @GetMapping
+  @GetMapping("/foo-bar")
   // Annotation to retry the request, can be customized in application.yml
-  @Retry(name = "default")
+  @Retry(name = "default", fallbackMethod = "fallbackMethod")
   public String fooBar(){
     logger.info("Request to foo-bar is received!");
     var response = new RestTemplate()
             .getForEntity("http://localhost:8080/foo-bar", String.class);
     return response.getBody();
+  }
+
+  public String fallbackMethod(Exception ex){
+    return "fallback method!!!";
   }
 
 }
