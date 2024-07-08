@@ -29,10 +29,11 @@ public class BookService {
       throw new BookDontExist("This book id doesn't exists!");
     }
 
+    var environment = port.getProperty("local.server.port");
     var exchange = proxy.getExchange(bookOpt.get().getPrice(), "USD", currency);
     bookOpt.get().setPrice(Objects.requireNonNull(exchange.getBody()).getConversionValue());
 
-    bookOpt.get().setEnviroment("book port: "+ port.getProperty("local.server.port"));
+    bookOpt.get().setEnviroment(environment);
 
     return bookOpt.get();
   }
