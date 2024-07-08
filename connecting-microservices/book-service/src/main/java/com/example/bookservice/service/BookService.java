@@ -30,6 +30,7 @@ public class BookService {
     }
 
     var environment = port.getProperty("local.server.port");
+
     var exchange = proxy.getExchange(bookOpt.get().getPrice(), "USD", currency);
     bookOpt.get().setPrice(Objects.requireNonNull(exchange.getBody()).getConversionValue());
 
