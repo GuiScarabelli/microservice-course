@@ -15,6 +15,14 @@ spring:
     schemas: exchange_service
     user: aluno
     password: aluno
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
 server:
   port: 8000
-
