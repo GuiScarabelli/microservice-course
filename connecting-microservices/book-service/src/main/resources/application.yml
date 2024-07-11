@@ -15,6 +15,13 @@ spring:
     schemas: book_service
     user: aluno
     password: aluno
+  sleuth:
+    trace-id128: true
+    sampler:
+      probability: 1
+  cloud:
+    compatibility-verifier:
+      enabled: false
 eureka:
   client:
     service-url:
@@ -31,6 +38,9 @@ management:
     web:
       exposure:
         include: '*'
+  tracing:
+    sampling:
+      probability: 1
 
 #Port of Application
 server:
