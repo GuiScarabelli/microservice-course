@@ -5,3 +5,8 @@ services:
     image: guiscarabelli/naming-server:0.0.1-SNAPSHOT
     ports:
       - 8761:8761
+    networks:
+      - my-network
+networks:
+  my-network:
+    driver: bridge
