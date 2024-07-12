@@ -13,4 +13,5 @@ public class BookListing {
   private LocalDate launchDate;
   private Double price;
   private String title;
+  private String environment;
 }
