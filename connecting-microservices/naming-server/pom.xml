@@ -68,8 +68,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>guiscarabelli/${project.artifactId}:${project.version}</name>
+					</image>
+					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
+					<docker>
+						<host>tcp://localhost:2375</host>
+					</docker>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
