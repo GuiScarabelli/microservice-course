@@ -1,10 +1,7 @@
 package com.example.cambioservice.mapper;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter @Setter
 public class ExchangeListing {
@@ -16,4 +13,6 @@ public class ExchangeListing {
   private Double conversionFactor;
 
   private Double conversionValue;
+
+  private String environment;
 }

@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients // Anotação para utilizar o Feign
+
 public class BookServiceApplication {
 
 	public static void main(String[] args) {
