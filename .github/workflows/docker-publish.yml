@@ -30,4 +30,4 @@ jobs:
 
     - name: Build Eureka Naming Server Container Image
       working-directory: ./connecting-microservices/naming-server
-      run: mvn spring-boot:build-image -DskipTests
+      run: mvn clean package docker:build -t your-image-name:latest -Dpush=true
