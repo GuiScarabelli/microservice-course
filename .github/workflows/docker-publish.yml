@@ -29,5 +29,5 @@ jobs:
       run: sudo service docker start
 
     - name: Build Eureka Naming Server Container Image
-      working-directory: ./naming-server
+      working-directory: ./connecting-microservices/naming-server
       run: mvn spring-boot:build-image -DskipTests
