@@ -32,7 +32,7 @@ jobs:
       working-directory: ./connecting-microservices/naming-server
       run: mvn spring-boot:build-image -DskipTests
 
-    - name: Build ApPI Gateway Image
+    - name: Build API Gateway Image
       working-directory: ./connecting-microservices/api-gateway
       run: mvn spring-boot:build-image -DskipTests
       
@@ -47,3 +47,14 @@ jobs:
     - name: Build Docker Compose
       working-directory: ./connecting-microservices
       run: docker-compose build
+
+    - name: Push to Docker Hub Container Registry
+      run: | 
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{ github.run_id }}
+        docker push  ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{ github.run_id }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_id }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{ github.run_id }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{ github.run_id }}
