@@ -30,4 +30,4 @@ jobs:
 
     - name: Build Eureka Naming Server Container Image
       working-directory: ./connecting-microservices/naming-server
-      run: docker buildx build --platform linux/amd64 -t guiscarabelli/naming-server:latest .
+      run: mvn spring-boot:build-image -DskipTests
