@@ -29,4 +29,5 @@ jobs:
       run: sudo service docker start
 
     - name: Build Eureka Naming Server Container Image
-      run: mvn clean package
+      working-directory: ./naming-server
+      run: mvn spring-boot:build-image -DskipTests
