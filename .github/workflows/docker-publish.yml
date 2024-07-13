@@ -21,6 +21,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
+
+    - name: Run Docker
+      run: sudo service docker start
+
+    - name: Set Docker Host
+      run: export DOCKER_HOST=tcp://localhost:2375
         
     - name: Build Eureka Naming Server Image
       working-directory: ./connecting-microservices/naming-server
