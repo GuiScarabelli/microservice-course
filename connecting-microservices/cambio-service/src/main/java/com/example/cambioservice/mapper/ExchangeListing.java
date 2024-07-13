@@ -13,6 +13,4 @@ public class ExchangeListing {
   private Double conversionFactor;
 
   private Double conversionValue;
-
-  private String environment;
 }

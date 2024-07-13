@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ExchangeService {
-  @Autowired
-  private Environment environment;// Serve para recuperar a porta da instancia do cambio-service
+
+//  @Autowired
+//  private Environment environment;// Serve para recuperar a porta da instancia do cambio-service
 
   @Autowired
   private ExchangeRepository repository;
