@@ -34,8 +34,6 @@ public class BookService {
     var exchange = proxy.getExchange(bookOpt.get().getPrice(), "USD", currency);
     bookOpt.get().setPrice(Objects.requireNonNull(exchange.getBody()).getConversionValue());
 
-    bookOpt.get().setEnviroment(environment);
-
     return bookOpt.get();
   }
 }
