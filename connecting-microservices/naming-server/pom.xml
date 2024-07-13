@@ -73,9 +73,9 @@
 						<name>guiscarabelli/${project.artifactId}:${project.version}</name>
 					</image>
 					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
-					<docker>
-						<host>tcp://localhost:2375</host>
-					</docker>
+#					<docker>
+#						<host>tcp://localhost:2375</host>
+#					</docker>
 				</configuration>
 			</plugin>
 		</plugins>
