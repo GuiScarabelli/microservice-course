@@ -29,5 +29,4 @@ jobs:
       run: sudo service docker start
 
     - name: Build Eureka Naming Server Container Image
-      working-directory: ./connecting-microservices/naming-server
-      run: mvn clean package docker:build -t guiscarabelli/naming-server:latest -Dpush=true
+      run: mvn clean package
