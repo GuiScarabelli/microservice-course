@@ -28,6 +28,9 @@ jobs:
     - name: Start Docker daemon
       run: sudo service docker start
 
+    - name: Clean all Docker images
+      run: docker images -a -q | % { docker image rm $_ -f }
+
     - name: Build Eureka Naming Server Container Image
       working-directory: ./connecting-microservices/naming-server
       run: mvn spring-boot:build-image -DskipTests
@@ -54,8 +57,5 @@ jobs:
         docker tag ${{ secrets.DOCKER_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{github.run_id}}
 
         docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:${{github.run_id}}
-        docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:latest
-        
         docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{github.run_id}}
-        docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
 
