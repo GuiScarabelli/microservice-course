@@ -51,7 +51,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./cambio-service
-        file: ./cambio-service/Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/cambio-service:latest
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/cambio-service:latest
