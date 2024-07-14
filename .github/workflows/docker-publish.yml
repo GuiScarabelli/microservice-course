@@ -28,9 +28,6 @@ jobs:
     - name: Start Docker daemon
       run: sudo service docker start
 
-    - name: Clean all Docker images
-      run: docker images -a -q | % { docker image rm $_ -f }
-
     - name: Build Eureka Naming Server Container Image
       working-directory: ./connecting-microservices/naming-server
       run: mvn spring-boot:build-image -DskipTests
