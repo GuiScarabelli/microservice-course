@@ -30,16 +30,20 @@ jobs:
 
     - name: Build Eureka Naming Server Container Image
       working-directory: ./connecting-microservices/naming-server
-      run: mvn spring-boot:build-image -DskipTests
+      run: |
+        mvn spring-boot:build-image -DskipTests
+        docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT
 
     - name: Build API Gateway Image
       working-directory: ./connecting-microservices/api-gateway
-      run: mvn spring-boot:build-image -DskipTests
-      
+      run: |
+        mvn spring-boot:build-image -DskipTests
+        docker tag api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT
+
     - name: Build Book Microservice JAR
       working-directory: ./connecting-microservices/book-service
       run: mvn clean package -DskipTests
-      
+
     - name: Build Exchange Microservice JAR
       working-directory: ./connecting-microservices/cambio-service
       run: mvn clean package -DskipTests
@@ -54,8 +58,10 @@ jobs:
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:latest
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
+
+        docker-compose -f ./connecting-microservices/docker-compose.yml up -d
+        docker tag cambio-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
+        docker tag book-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
         
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:latest
@@ -65,4 +71,3 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest
-
