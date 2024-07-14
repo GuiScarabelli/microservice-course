@@ -21,9 +21,6 @@ public class ExchangeController {
   @Autowired
   private ExchangeService service;
 
-  @Autowired
-  private Environment environment;
-
   @Operation(summary = "Get the exchange from the currency")
   @GetMapping("/{amount}/{from}/{to}")
   private ResponseEntity<ExchangeListing> getExchange(@PathVariable Double amount,
@@ -32,7 +29,6 @@ public class ExchangeController {
 
     Exchange exchange = service.getExchange(to, from, amount);
     ExchangeListing dto = ExchangeMapper.toDto(exchange);
-    dto.setEnvironment(environment.getProperty("local.server.port"));
 
     return ResponseEntity.status(200).body(dto);
   }

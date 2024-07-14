@@ -107,6 +107,7 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
