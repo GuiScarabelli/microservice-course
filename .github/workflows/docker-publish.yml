@@ -52,8 +52,10 @@ jobs:
       run: |
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/book-service:0.0.1-SNAPSHOT.jar ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
        
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
