@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out the repository
+        uses: actions/checkout@v2
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -22,30 +23,38 @@ jobs:
           distribution: 'adopt'
 
       - name: Build Eureka Naming Server Container Image
-        working-directory: ./connecting-microservices/naming-server
+        working-directory: ./Dockerizing/10-naming-server
         run: |
           mvn spring-boot:build-image -DskipTests
           docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT
 
       - name: Build API Gateway Container Image
-        working-directory: ./connecting-microservices/api-gateway
+        working-directory: ./Dockerizing/10-api-gateway
         run: |
           mvn spring-boot:build-image -DskipTests
           docker tag api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT
 
       - name: Build Cambio Microservice Jar
-        working-directory: ./connecting-microservices/cambio-service
+        working-directory: ./Dockerizing/10-cambio-service
         run: mvn clean package -DskipTests
 
       - name: Build Book Microservice Jar
-        working-directory: ./connecting-microservices/book-service
+        working-directory: ./Dockerizing/10-book-service
         run: mvn clean package -DskipTests
         
       - name: Docker Compose Build
-        working-directory: ./connecting-microservices
+        working-directory: ./Dockerizing
         run: docker-compose build
 
-      - name: Push to Docker Hub Container Registry
+      - name: Verify Images
+        run: |
+          docker images
+          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT || exit 1
+          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT || exit 1
+          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest || exit 1
+          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest || exit 1
+
+      - name: Tag and Push Docker Images
         run: |
           docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
           docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:latest
