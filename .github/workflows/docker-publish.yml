@@ -48,9 +48,10 @@ jobs:
       working-directory: ./connecting-microservices
       run: docker-compose build
 
-    - name: Push to Docker Hub Container Registry
-      run: |
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/cambio-service:latest
