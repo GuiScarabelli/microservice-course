@@ -26,14 +26,12 @@ jobs:
         working-directory: ./connecting-microservices/naming-server
         run: |
           mvn spring-boot:build-image -DskipTests
-          docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT
-
+          
       - name: Build API Gateway Container Image
         working-directory: ./connecting-microservices/api-gateway
         run: |
           mvn spring-boot:build-image -DskipTests
-          docker tag api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT
-
+          
       - name: Build Cambio Microservice Jar
         working-directory: ./connecting-microservices/cambio-service
         run: mvn clean package -DskipTests
@@ -45,31 +43,18 @@ jobs:
       - name: Docker Compose Build
         working-directory: ./connecting-microservices
         run: docker-compose build
-
-      - name: Verify Images
-        run: |
-          docker images
-          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT || exit 1
-          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT || exit 1
-          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest || exit 1
-          docker image inspect ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest || exit 1
-
+        
       - name: Tag and Push Docker Images
         run: |
-          docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
-          docker tag naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:latest
-          docker tag api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
-          docker tag api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
-          docker tag cambio-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
-          docker tag cambio-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest
-          docker tag book-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
-          docker tag book-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
+         
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
+
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
+
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/book-service: ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
           
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:${{github.run_id}}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/naming-server:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{github.run_id}}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:${{github.run_id}}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/cambio-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/book-service:${{github.run_id}}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/book-service:latest
